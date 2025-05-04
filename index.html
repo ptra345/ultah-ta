@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Selamat Ulang Tahun</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  
+  <style>
+
+  .awan {
+    position: absolute;
+    width: 120px;
+    height: 60px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 60px 0 #fff, 30px -20px #fff, 90px -10px #fff;
+    opacity: 0.6;
+    animation: gerakAwan 40s linear infinite;
+    z-index: 0;
+}
+
+@keyframes gerakAwan {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(120vw); }
+}
+
+    body {
+      background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    @keyframes backgroundColorChange {
+  0% {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  50% {
+    background-color: rgba(255, 200, 200, 0.9); /* Ubah warna menjadi lebih soft */
+  }
+  100% {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+  @keyframes zoomIn {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+    #surat {
+      display: none;
+      margin-top: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 2px 4px 10px rgba(0,0,0,0.4);
+      width: 300px;
+      text-align: center;
+      animation: slideIn 1s ease-out forwards;
+      animation: bounce 1s ease infinite;
+      animation: backgroundColorChange 3s infinite;
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes bounce {
+    0%, 100% {
+    transform: translateY(0);
+  }
+    50% {
+    transform: translateY(-10px);
+  }
+}
+
+    #surat h2 {
+      font-family: 'Pacifico', cursive;
+      font-size: 28px;
+      margin-bottom: 15px;
+      animation: bounce 1s ease infinite;
+    }
+
+    #text-isi {
+      font-size: 16px;
+      min-height: 70px;
+    }
+
+    /* Transisi fade in manual */
+    .fade-muncul {
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .fade-muncul.aktif {
+      opacity: 1;
+    }
+    
+    button {
+      padding: 12px 25px;
+      background: linear-gradient(to right, #ff758c, #ff7eb3);
+      border: none;
+      border-radius: 30px;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+      animation: bounce 1s ease infinite;
+      z-index: 3;
+    }
+    button:hover {
+      transform: scale(1.05);
+    }
+
+      /* Animasi hujan hati */
+     @keyframes fallHearts {
+      0% { transform: translateY(-100px); opacity: 0.7; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+     /* Hati jatuh */
+     .love {
+      position: absolute;
+      top: -30px;
+      font-size: 30px;
+      color: #ff4d6d;
+      animation: fallHearts 10s infinite;
+      animation-timing-function: ease-in;
+      opacity: 0.8;
+      z-index: 1;
+     }
+
+      /* Gaya untuk emoji tambahan */
+    .emoji-dekor {
+      font-size: 30px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <button onclick="bukaSurat()">Buka Surat 🎵</button>
+
+  <div id="surat">
+    <h2>Untukmu...</h2>
+    <p id="text-isi"></p>
+  <div class="emoji-dekor">💐🎁🌸</div>
+  </div>
+
+  <audio id="lagu" src="music/losing-us.mp3"></audio>
+
+  <script>
+    function bukaSurat() {
+      document.getElementById('surat').style.display = 'block';
+      document.getElementById('lagu').volume = 0.5;
+      document.getElementById('lagu').play();
+      ketikTeks(); // Panggil animasi ketik
+    }
+
+    // Fungsi animasi ketik
+      const isiTeks = "Selamat Ulang Tahun, Jagat Rayaku.\nSemoga Bahagia Selalu \nDunia Ku 💌";
+      let i = 0;
+
+    function ketikTeks() {
+      const elemen = document.getElementById("text-isi");
+      if (i < isiTeks.length) {
+        const huruf = isiTeks[i] === "\n" ? "<br>" : isiTeks[i];
+        elemen.innerHTML += huruf;
+        i++;
+        setTimeout(ketikTeks, 50);
+      }
+    }
+
+      // Delay agar transisi fade-in bisa berjalan
+      setTimeout(() => {
+        surat.classList.add('aktif');
+      }, 10);
+
+      const lagu = document.getElementById('lagu');
+      lagu.play();
+    
+      function tambahAwan(jumlah, jedams) {
+      let count = 0;
+      const interval = setInterval(() => {
+    if (count >= jumlah) {
+      clearInterval(interval);
+      return;
+    }
+
+    const awan = document.createElement('div');
+    awan.classList.add('awan');
+
+    const posisiTop = Math.random() * 200 + 20;
+    awan.style.top = `${posisiTop}px`;
+    awan.style.left = `${-Math.random() * 300}px`;
+    awan.style.animationDelay = `${Math.random() * 5}s`;
+
+    document.body.appendChild(awan);
+    count++;
+  }, jedams); // jeda antar awan
+}
+
+     // Fungsi untuk menambahkan hati jatuh secara dinamis
+     function tambahHati() {
+      const jumlahHati = 30; // Jumlah hati yang ingin ditambahkan
+      const body = document.body;
+
+      for (let i = 0; i < jumlahHati; i++) {
+        // Membuat elemen hati
+        const hati = document.createElement('div');
+        hati.classList.add('love');
+        hati.innerHTML = '❤️';  // Isi elemen dengan hati
+        hati.style.left = `${Math.random() * 100}vw`; // Set posisi acak dari kiri
+        hati.style.animationDuration = `${Math.random() * 2 + 3}s`; // Durasi acak antara 3s hingga 5s
+        body.appendChild(hati);
+      }
+    }
+    // Menambahkan hati saat halaman dimuat
+    window.onload = function() {
+      tambahHati();
+      tambahAwan(20, 800);  // 20 awan, tiap 800ms sekali muncul
+
+       // Deteksi kalau lagu error (misalnya file nggak ada)
+       const lagu = document.getElementById('lagu');
+      lagu.addEventListener('error', function() {
+        alert("Lagu tidak ditemukan 😢");
+      });
+    };
+  </script>
+
+</body>
+</html>
